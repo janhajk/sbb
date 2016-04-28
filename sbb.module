@@ -1,0 +1,41 @@
+<?php
+/**
+ * Implements hook_module_implements_alter().
+ */
+function sbb_module_implements_alter(&$implementations, $hook) {
+  if ($hook == 'entity_info_alter') {
+    // Move our hook implementation to the bottom.
+    $group = $implementations['sbb'];
+    unset($implementations['sbb']);
+    $implementations['sbb'] = $group;
+  }
+}
+
+/**
+ * Implements hook_entity_info_alter(&$entities);
+ */
+function sbb_entity_info_alter(&$entities) {
+  $entities['user']['access callback'] = 'sbb_metadata_user_access';
+}
+/**
+ * Implements hook_query_alter().
+ * Alter entity queries to always allow access to bloqued users.
+ */
+function sbb_query_alter(&$query) {
+  if ($query->alterTags && !empty($query->alterTags['entityreference']) && isset($query->alterTags['user_access'])) {
+    unset($query->propertyCondition);
+    $query->entityCondition('status', 0, '>=');
+  }
+}
+
+/**
+ * Access callback to user entities.
+ */
+function sbb_metadata_user_access($op, $entity = NULL, $account = NULL, $entity_type) {
+  $access = entity_metadata_user_access($op, $entity, $account, $entity_type);
+  if (!$access && $op == 'view' && user_access('access user profiles', $account)) {
+    $access = true;
+  }
+  return $access;
+}
+

@@ -1,0 +1,6 @@
+name: Custom SBB Module
+description: Alles Individuelle für die SBB Seite
+package: Custom
+type: module
+version: 1.0
+core: 8.x
