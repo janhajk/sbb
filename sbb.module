@@ -3,7 +3,7 @@
  * Implements hook_module_implements_alter().
  */
 function sbb_module_implements_alter(&$implementations, $hook) {
-  if ($hook == 'entity_info_alter') {
+  if ($hook == 'entity_type_alter') {
     // Move our hook implementation to the bottom.
     $group = $implementations['sbb'];
     unset($implementations['sbb']);
@@ -12,9 +12,9 @@ function sbb_module_implements_alter(&$implementations, $hook) {
 }
 
 /**
- * Implements hook_entity_info_alter(&$entities);
+ * Implements hook_entity_type_alter(&$entities);
  */
-function sbb_entity_info_alter(&$entities) {
+function sbb_entity_type_alter(&$entities) {
   $entities['user']['access callback'] = 'sbb_metadata_user_access';
 }
 /**
