@@ -8,7 +8,7 @@ use Drupal\user\UserAccessControlHandler;
 use Drupal\Core\Session\AccountInterface;
 
 
-class BlockedUser extends UserAccessControlHandler {
+class SbbAccessControlHandler extends UserAccessControlHandler {
 
     /**
    * {@inheritdoc}

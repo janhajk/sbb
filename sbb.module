@@ -1,4 +1,15 @@
 <?php
+namespace Drupal\sbb;
+
+use Drupal/sbb/SbbAccessControlHandler
+
+/**
+ * Implements hook_entity_type_alter(&$entities);
+ */
+function sbb_entity_type_alter(array &$entity_types) {
+  $entity_types['user']->setHandlerClass('access', 'Drupal/sbb/BlockedUser');
+}
+
 
 /**
  * Implements hook_module_implements_alter().
@@ -12,12 +23,7 @@
   }
 }*/
 
-/**
- * Implements hook_entity_type_alter(&$entities);
- */
-function sbb_entity_type_alter(array &$entity_types) {
-  $entity_types['user']->setHandlerClass('access', 'Drupal/sbb/BlockedUser');
-}
+
 
 
 
